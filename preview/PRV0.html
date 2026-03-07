@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Crumb & Co. — Dublin</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+
+/* ─── RESET & BASE ─────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --cream:   #F9F7F2;
+  --white:   #FFFFFF;
+  --ink:     #1A1916;
+  --ash:     #9A9690;
+  --rule:    #E6E3DB;
+  --gold:    #E8B400;
+  --gold-lt: #FFF8DC;
+}
+html { font-size: 16px; scroll-behavior: smooth; }
+body {
+  font-family: 'Jost', sans-serif;
+  background: var(--cream);
+  color: var(--ink);
+  overflow-x: hidden;
+}
+
+
+/* ─── NOISE TEXTURE OVERLAY ────────────────────────────────────────────── */
+body::before {
+  content: '';
+  position: fixed; inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+  opacity: 0.025;
+  pointer-events: none;
+  z-index: 1000;
+}
+
+/* ─── NAV ───────────────────────────────────────────────── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 2rem 4vw;
+  animation: fadeIn 1.2s ease both;
+}
+.nav-bg {
+  position: absolute; inset: 0;
+  background: rgba(249,247,242,0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--rule);
+}
+nav > * { position: relative; }
+
+.logo {
+  display: flex; align-items: center; gap: 0.75rem;
+  text-decoration: none;
+}
+.logo-mark {
+  width: 36px; height: 36px;
+  background: var(--ink);
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  position: relative;
+  overflow: hidden;
+}
+.logo-mark::after {
+  content: '';
+  position: absolute; bottom: 0; left: 0; right: 0;
+  height: 5px;
+  background: var(--gold);
+}
+.logo-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.2rem;
+  font-weight: 400;
+  letter-spacing: 0.06em;
+  color: var(--ink);
+  text-transform: uppercase;
+}
+
+.nav-center {
+  display: flex; gap: 3rem;
+  position: absolute; left: 50%; transform: translateX(-50%);
+}
+.nav-center a {
+  font-size: 0.72rem; font-weight: 400; letter-spacing: 0.14em;
+  text-transform: uppercase; text-decoration: none;
+  color: var(--ash); transition: color 0.2s;
+}
+.nav-center a:hover { color: var(--ink); }
+
+.nav-right {
+  display: flex; align-items: center; gap: 2rem;
+}
+.nav-order {
+  font-size: 0.72rem; font-weight: 500; letter-spacing: 0.12em;
+  text-transform: uppercase; text-decoration: none;
+  color: var(--ink);
+  padding: 0.6rem 1.4rem;
+  border: 1px solid var(--ink);
+  transition: background 0.25s, color 0.25s;
+}
+.nav-order:hover { background: var(--ink); color: var(--cream); }
+
+/* ─── HERO ──────────────────────────────────────────────── */
+.hero {
+  min-height: 100vh;
+  display: flex; flex-direction: column; justify-content: flex-end;
+  padding: 0 4vw 5rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-bg-text {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(12rem, 22vw, 20rem);
+  font-weight: 300;
+  line-height: 1;
+  color: transparent;
+  -webkit-text-stroke: 1px var(--rule);
+  white-space: nowrap;
+  pointer-events: none;
+  user-select: none;
+  animation: slowDrift 18s ease-in-out infinite alternate;
+}
+
+@keyframes slowDrift {
+  from { transform: translate(-50%, -50%) scale(1); }
+  to   { transform: translate(-50%, -50%) scale(1.04); }
+}
+
+.hero-top {
+  position: absolute; top: 0; left: 0; right: 0;
+  padding: 8rem 4vw 0;
+  display: flex; justify-content: space-between; align-items: flex-start;
+}
+
+.hero-eyebrow {
+  font-size: 0.7rem; font-weight: 400; letter-spacing: 0.16em;
+  text-transform: uppercase; color: var(--ash);
+  animation: fadeUp 1s 0.3s ease both;
+}
+
+.hero-year {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 0.85rem; color: var(--ash); letter-spacing: 0.08em;
+  animation: fadeUp 1s 0.3s ease both;
+}
+
+.hero-illustration {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -54%);
+  animation: floatSandwich 6s ease-in-out infinite, fadeIn 1.4s 0.5s ease both;
+}
+
+.hero-bottom {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: flex-end;
+  gap: 2rem;
+  animation: fadeUp 1s 0.5s ease both;
+}
+
+h1 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(3.5rem, 7vw, 6rem);
+  font-weight: 300;
+  line-height: 1.05;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+}
+h1 em { font-style: italic; }
+
+.hero-meta { text-align: right; }
+.hero-desc {
+  font-size: 0.82rem; font-weight: 300; line-height: 1.9;
+  color: var(--ash); max-width: 240px; margin-left: auto;
+  margin-bottom: 1.8rem;
+}
+.hero-scroll {
+  display: flex; align-items: center; justify-content: flex-end; gap: 0.7rem;
+  font-size: 0.68rem; letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--ash); text-decoration: none;
+  transition: color 0.2s;
+}
+.hero-scroll:hover { color: var(--ink); }
+.scroll-line {
+  width: 40px; height: 1px; background: var(--ash);
+  transition: width 0.3s;
+}
+.hero-scroll:hover .scroll-line { width: 60px; background: var(--ink); }
+
+.hero-rule {
+  width: 1px; height: 100px; background: var(--gold);
+  margin: 0 auto;
+  transform-origin: top;
+  animation: growDown 1.2s 0.8s ease both;
+}
+
+@keyframes growDown {
+  from { transform: scaleY(0); }
+  to   { transform: scaleY(1); }
+}
+@keyframes floatSandwich {
+  0%, 100% { transform: translate(-50%, -54%); }
+  50%       { transform: translate(-50%, -57%); }
+}
+
+/* ─── TICKER ────────────────────────────────────────────── */
+.ticker {
+  padding: 1.1rem 0;
+  overflow: hidden;
+  border-top: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
+}
+.ticker-inner {
+  display: inline-flex; white-space: nowrap;
+  animation: tickerAnim 28s linear infinite;
+}
+.ticker-item {
+  display: inline-flex; align-items: center; gap: 1.5rem;
+  padding: 0 2.5rem;
+  font-size: 0.68rem; font-weight: 400; letter-spacing: 0.2em;
+  text-transform: uppercase; color: var(--ash);
+}
+.ticker-dot {
+  width: 3px; height: 3px; background: var(--gold);
+  border-radius: 50%; flex-shrink: 0;
+}
+@keyframes tickerAnim {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+/* ─── SECTION BASE ──────────────────────────────────────── */
+.section { padding: 8rem 4vw; }
+
+.label {
+  font-size: 0.65rem; font-weight: 500; letter-spacing: 0.2em;
+  text-transform: uppercase; color: var(--gold);
+  display: flex; align-items: center; gap: 1rem;
+  margin-bottom: 2.5rem;
+}
+.label::before {
+  content: ''; display: block;
+  width: 24px; height: 1px; background: var(--gold);
+}
+
+/* ─── MENU ──────────────────────────────────────────────── */
+.menu-section { background: var(--white); }
+
+.menu-header {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 4rem; align-items: end;
+  margin-bottom: 5rem;
+}
+.menu-header h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(2.8rem, 5vw, 4.2rem);
+  font-weight: 300; line-height: 1.1;
+  letter-spacing: -0.015em;
+}
+.menu-header h2 em { font-style: italic; }
+.menu-intro {
+  font-size: 0.85rem; line-height: 1.9;
+  color: var(--ash); font-weight: 300;
+  max-width: 360px; align-self: end;
+}
+
+.menu-list { width: 100%; }
+.menu-item {
+  display: grid;
+  grid-template-columns: 3fr 1fr;
+  align-items: center;
+  padding: 2rem 0;
+  border-bottom: 1px solid var(--rule);
+  cursor: default;
+  transition: padding-left 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+.menu-item::before {
+  content: '';
+  position: absolute; left: 0; top: 0; bottom: 0;
+  width: 0; background: var(--gold-lt);
+  transition: width 0.4s ease;
+  z-index: 0;
+}
+.menu-item:hover { padding-left: 1rem; }
+.menu-item:hover::before { width: 100%; }
+.menu-item > * { position: relative; z-index: 1; }
+
+.menu-item-left { display: flex; align-items: center; gap: 1.5rem; }
+.menu-num {
+  font-size: 0.65rem; color: var(--gold); font-weight: 400;
+  letter-spacing: 0.1em; min-width: 24px;
+}
+.menu-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.4rem; font-weight: 400;
+}
+.menu-name span {
+  display: block; font-family: 'Jost', sans-serif;
+  font-size: 0.75rem; color: var(--ash); font-weight: 300;
+  letter-spacing: 0.04em; margin-top: 0.2rem; font-style: normal;
+}
+.menu-price {
+  text-align: right;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.2rem; color: var(--ash); font-weight: 300;
+}
+
+/* ─── ABOUT ─────────────────────────────────────────────── */
+.about-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+}
+.about-left {
+  padding-right: 6vw;
+  border-right: 1px solid var(--rule);
+}
+.about-right {
+  padding-left: 6vw;
+  display: flex; flex-direction: column; justify-content: center;
+}
+
+.about-left h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(2.4rem, 4vw, 3.6rem);
+  font-weight: 300; line-height: 1.15;
+  letter-spacing: -0.01em;
+  margin-bottom: 2.5rem;
+}
+.about-left h2 em { font-style: italic; color: var(--gold); }
+
+.about-quote {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.5rem; font-weight: 300; font-style: italic;
+  line-height: 1.6; color: var(--ink);
+  padding-left: 1.5rem;
+  border-left: 2px solid var(--gold);
+  margin-bottom: 1rem;
+}
+.about-quote-attr {
+  font-size: 0.72rem; color: var(--ash); letter-spacing: 0.08em;
+  padding-left: 1.5rem;
+}
+
+.pillars { display: flex; flex-direction: column; gap: 2rem; }
+.pillar-num {
+  font-size: 0.6rem; color: var(--gold); letter-spacing: 0.14em;
+  text-transform: uppercase; margin-bottom: 0.5rem; font-weight: 500;
+}
+.pillar-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.1rem; font-weight: 400; margin-bottom: 0.3rem;
+}
+.pillar-text {
+  font-size: 0.8rem; color: var(--ash); line-height: 1.8; font-weight: 300;
+}
+.pillar-divider { height: 1px; background: var(--rule); margin-top: 2rem; }
+
+/* ─── VISIT ─────────────────────────────────────────────── */
+.visit-section {
+  background: var(--ink); color: var(--cream);
+}
+.visit-grid {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 8vw; align-items: start;
+}
+.visit-section .label { color: var(--gold); }
+.visit-section .label::before { background: var(--gold); }
+
+.visit-heading {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(2.6rem, 5vw, 4rem);
+  font-weight: 300; line-height: 1.1;
+  letter-spacing: -0.01em;
+  color: var(--cream);
+  margin-bottom: 3rem;
+}
+.visit-heading em { font-style: italic; color: var(--gold); }
+
+.hours-list { width: 100%; }
+.hour-row {
+  display: flex; justify-content: space-between;
+  padding: 1.1rem 0;
+  border-bottom: 1px solid rgba(255,255,255,0.07);
+  font-size: 0.82rem; font-weight: 300;
+}
+.hour-row:first-child { border-top: 1px solid rgba(255,255,255,0.07); }
+.hour-day { color: rgba(255,255,255,0.4); letter-spacing: 0.06em; }
+.hour-time { color: var(--cream); }
+.hour-time.closed { color: rgba(255,255,255,0.2); }
+
+.visit-right { padding-top: 4rem; }
+.address-block { margin-bottom: 3rem; }
+.address-label {
+  font-size: 0.62rem; letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--gold); margin-bottom: 0.8rem; font-weight: 500;
+}
+.address-street {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2.2rem; font-weight: 300; line-height: 1.2;
+  color: var(--cream);
+}
+.address-city {
+  font-size: 0.8rem; color: rgba(255,255,255,0.35);
+  margin-top: 0.4rem; letter-spacing: 0.05em;
+}
+
+.map-box {
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 4px;
+  padding: 2.5rem;
+  display: flex; align-items: center; justify-content: center;
+  flex-direction: column; gap: 0.7rem;
+  margin-bottom: 2rem;
+  min-height: 160px;
+  position: relative;
+  overflow: hidden;
+}
+.map-box::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse at 50% 100%, rgba(232,180,0,0.07), transparent 60%);
+}
+.map-note {
+  font-size: 0.72rem; color: rgba(255,255,255,0.3);
+  letter-spacing: 0.08em; text-align: center;
+  position: relative; z-index: 1;
+  line-height: 1.7;
+}
+
+.dir-link {
+  display: inline-flex; align-items: center; gap: 0.8rem;
+  font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase;
+  text-decoration: none; color: var(--cream);
+  border-bottom: 1px solid rgba(255,255,255,0.2);
+  padding-bottom: 0.3rem;
+  transition: border-color 0.2s, color 0.2s;
+}
+.dir-link:hover { border-color: var(--gold); color: var(--gold); }
+
+/* ─── FOOTER ────────────────────────────────────────────── */
+footer {
+  padding: 2.5rem 4vw;
+  display: flex; align-items: center; justify-content: space-between;
+  border-top: 1px solid var(--rule);
+  flex-wrap: wrap; gap: 1rem;
+}
+.footer-logo {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 0.9rem; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--ash);
+  text-decoration: none;
+}
+.footer-links {
+  display: flex; gap: 2rem; list-style: none;
+}
+.footer-links a {
+  font-size: 0.68rem; letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--ash); text-decoration: none; transition: color 0.2s;
+}
+.footer-links a:hover { color: var(--ink); }
+.footer-copy {
+  font-size: 0.68rem; color: var(--ash); letter-spacing: 0.05em;
+}
+
+/* ─── ANIMATIONS ────────────────────────────────────────── */
+@keyframes fadeIn  { from { opacity: 0 } to { opacity: 1 } }
+@keyframes fadeUp  {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ─── RESPONSIVE ─────────────────────────────────────────── */
+@media (max-width: 800px) {
+  .nav-center, .nav-right { display: none; }
+  .hero-bg-text { font-size: 30vw; }
+  .hero-bottom { grid-template-columns: 1fr; }
+  .hero-rule { display: none; }
+  .hero-meta { text-align: left; }
+  .hero-desc { margin-left: 0; }
+  .hero-scroll { justify-content: flex-start; }
+  .menu-header { grid-template-columns: 1fr; gap: 1.5rem; }
+  .about-grid { grid-template-columns: 1fr; }
+  .about-left { padding-right: 0; border-right: none; padding-bottom: 4rem; border-bottom: 1px solid var(--rule); }
+  .about-right { padding-left: 0; padding-top: 4rem; }
+  .visit-grid { grid-template-columns: 1fr; }
+  .hero-illustration { top: 40%; }
+}
+</style>
+</head>
+<body>
+
+<!-- POPUP -->
+<div id="popup-overlay" style="
+  position: fixed; inset: 0; z-index: 9000;
+  background: rgba(26,25,22,0.6);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  display: flex; align-items: center; justify-content: center;
+  animation: fadeIn 0.4s ease both;
+">
+  <div style="
+    background: #F9F7F2;
+    max-width: 480px; width: 90%;
+    padding: 3.5rem;
+    position: relative;
+    border-top: 3px solid #E8B400;
+    animation: fadeUp 0.5s 0.1s ease both;
+  ">
+    <button onclick="document.getElementById('popup-overlay').style.display='none'" style="
+      position: absolute; top: 1.2rem; right: 1.4rem;
+      background: none; border: none; cursor: pointer;
+      font-size: 1.2rem; color: #9A9690; line-height: 1;
+      transition: color 0.2s;
+    " onmouseover="this.style.color='#1A1916'" onmouseout="this.style.color='#9A9690'">✕</button>
+
+    <div style="
+      font-size: 0.62rem; font-weight: 500; letter-spacing: 0.2em;
+      text-transform: uppercase; color: #E8B400;
+      display: flex; align-items: center; gap: 0.8rem;
+      margin-bottom: 1.5rem;
+    ">
+      <span style="display:block;width:20px;height:1px;background:#E8B400"></span>
+      TrendPotion
+    </div>
+
+    <p style="
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.9rem; font-weight: 300; line-height: 1.25;
+      letter-spacing: -0.01em; color: #1A1916;
+      margin-bottom: 1.5rem;
+    ">This is what your website <em style="font-style:italic">could look like</em> if you joined TrendPotion.</p>
+
+    <p style="
+      font-size: 0.82rem; font-weight: 300; line-height: 1.8;
+      color: #9A9690; margin-bottom: 2.5rem;
+    ">We design and build beautiful, modern websites for businesses ready to stand out. Let's make yours next.</p>
+
+    <div style="display:flex; align-items:center; gap:1.5rem; flex-wrap:wrap;">
+      <a href="https://trendpotion.com/#contact" target="_blank" style="
+        background: #1A1916; color: #F9F7F2;
+        text-decoration: none;
+        padding: 0.8rem 1.8rem;
+        font-size: 0.72rem; font-weight: 500; letter-spacing: 0.12em;
+        text-transform: uppercase;
+        transition: background 0.2s;
+      " onmouseover="this.style.background='#E8B400';this.style.color='#1A1916'" onmouseout="this.style.background='#1A1916';this.style.color='#F9F7F2'">Claim My Website</a>
+      <button onclick="document.getElementById('popup-overlay').style.display='none'" style="
+        background: none; border: none; cursor: pointer;
+        font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase;
+        color: #9A9690; transition: color 0.2s; text-decoration: underline;
+        text-underline-offset: 3px;
+      " onmouseover="this.style.color='#1A1916'" onmouseout="this.style.color='#9A9690'">Show me the preview first</button>
+    </div>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-bg"></div>
+  <a href="#" class="logo">
+        <span class="logo-name">Crumb &amp; Co.</span>
+  </a>
+  <div class="nav-center">
+    <a href="#menu">Menu</a>
+    <a href="#about">Our Story</a>
+    <a href="#visit">Visit</a>
+  </div>
+  <div class="nav-right">
+    <a href="#visit" class="nav-order">Order</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg-text">Baked</div>
+
+  <div class="hero-top">
+    <p class="hero-eyebrow">Est. 2012 — Dublin 2</p>
+    <p class="hero-year">Artisan Bakery &amp; Café</p>
+  </div>
+
+  <div class="hero-illustration">
+    <svg width="260" height="200" viewBox="0 0 260 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <ellipse cx="130" cy="190" rx="85" ry="8" fill="#1A1916" opacity="0.08"/>
+      <path d="M35 148 L225 148 L225 163 Q225 178 130 178 Q35 178 35 163 Z" fill="#C8924A"/>
+      <path d="M35 148 L225 148 L225 153 Q155 145 130 147 Q105 149 35 153 Z" fill="#D9A660"/>
+      <path d="M40 138 L220 138 L224 148 L36 148 Z" fill="#E8B400"/>
+      <path d="M80 138 L80 152 Q78 155 76 152 L76 138Z" fill="#E8B400"/>
+      <path d="M130 138 L130 154 Q128 157 126 154 L126 138Z" fill="#E8B400"/>
+      <path d="M180 138 L180 150 Q178 153 176 150 L176 138Z" fill="#E8B400"/>
+      <rect x="38" y="122" width="184" height="22" rx="5" fill="#7A3C1E"/>
+      <path d="M38 122 Q130 114 222 122 L222 128 Q130 120 38 128 Z" fill="#8B4820"/>
+      <rect x="36" y="112" width="188" height="12" rx="3" fill="#D94F4F"/>
+      <line x1="90" y1="112" x2="90" y2="124" stroke="#B83838" stroke-width="1" opacity="0.5"/>
+      <line x1="130" y1="112" x2="130" y2="124" stroke="#B83838" stroke-width="1" opacity="0.5"/>
+      <line x1="170" y1="112" x2="170" y2="124" stroke="#B83838" stroke-width="1" opacity="0.5"/>
+      <path d="M35 102 Q48 93 61 102 Q74 93 87 102 Q100 93 113 102 Q126 93 139 102 Q152 93 165 102 Q178 93 191 102 Q204 93 217 102 L225 112 L35 112 Z" fill="#4E9944"/>
+      <path d="M38 92 L222 92 L226 102 L34 102 Z" fill="#F0C020"/>
+      <path d="M35 65 Q35 22 130 22 Q225 22 225 65 L225 80 L35 80 Z" fill="#C8924A"/>
+      <path d="M40 60 Q40 28 130 28 Q220 28 220 60 L220 66 Q170 56 130 58 Q90 60 40 66 Z" fill="#D9A660"/>
+      <path d="M60 50 Q90 40 130 38 Q160 37 185 44" stroke="#E8B870" stroke-width="2" stroke-linecap="round" opacity="0.6"/>
+      <ellipse cx="110" cy="42" rx="7" ry="3.5" fill="#E8B870" transform="rotate(-15 110 42)"/>
+      <ellipse cx="140" cy="36" rx="7" ry="3.5" fill="#E8B870" transform="rotate(5 140 36)"/>
+      <ellipse cx="170" cy="42" rx="7" ry="3.5" fill="#E8B870" transform="rotate(-8 170 42)"/>
+      <ellipse cx="125" cy="54" rx="6" ry="3" fill="#E8B870" transform="rotate(10 125 54)"/>
+      <ellipse cx="155" cy="52" rx="6" ry="3" fill="#E8B870" transform="rotate(-12 155 52)"/>
+      <path d="M35 80 L225 80 L225 85 Q155 80 130 82 Q105 84 35 85 Z" fill="#B07838"/>
+    </svg>
+  </div>
+
+  <div class="hero-bottom">
+    <h1>Baked<br/><em>by hand,</em><br/>daily.</h1>
+    <div class="hero-rule"></div>
+    <div class="hero-meta">
+      <p class="hero-desc">Every loaf shaped by hand. Every crust earned by patience. Dublin's most unhurried bakery, open every morning.</p>
+      <a href="#menu" class="hero-scroll">
+        Discover the menu
+        <span class="scroll-line"></span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- TICKER -->
+<div class="ticker">
+  <div class="ticker-inner">
+    <span class="ticker-item">Sourdough<span class="ticker-dot"></span></span>
+    <span class="ticker-item">Country Brown<span class="ticker-dot"></span></span>
+    <span class="ticker-item">Butter Croissants<span class="ticker-dot"></span></span>
+    <span class="ticker-item">Pain au Chocolat<span class="ticker-dot"></span></span>
+    <span class="ticker-item">Artisan Sandwiches<span class="ticker-dot"></span></span>
+    <span class="ticker-item">Irish Soda Bread<span class="ticker-dot"></span></span>
+    <span class="ticker-item">Seasonal Pastries<span class="ticker-dot"></span></span>
+    <span class="ticker-item">Specialty Coffee<span class="ticker-dot"></span></span>
+    <span class="ticker-item">Sourdough<span class="ticker-dot"></span></span>
+    <span class="ticker-item">Country Brown<span class="ticker-dot"></span></span>
+    <span class="ticker-item">Butter Croissants<span class="ticker-dot"></span></span>
+    <span class="ticker-item">Pain au Chocolat<span class="ticker-dot"></span></span>
+    <span class="ticker-item">Artisan Sandwiches<span class="ticker-dot"></span></span>
+    <span class="ticker-item">Irish Soda Bread<span class="ticker-dot"></span></span>
+    <span class="ticker-item">Seasonal Pastries<span class="ticker-dot"></span></span>
+    <span class="ticker-item">Specialty Coffee<span class="ticker-dot"></span></span>
+  </div>
+</div>
+
+<!-- MENU -->
+<section id="menu" class="section menu-section">
+  <div class="label">What We Make</div>
+  <div class="menu-header">
+    <h2>The menu.<br/><em>Simple. Honest.</em></h2>
+    <p class="menu-intro">Everything leaves the oven before 7 am. Once it's gone, it's gone. Our bakers start at 3 am so you don't have to think about it.</p>
+  </div>
+  <div class="menu-list">
+    <div class="menu-item">
+      <div class="menu-item-left">
+        <span class="menu-num">01</span>
+        <div class="menu-name">Country Sourdough<span>36-hour cold ferment — crisp crust, open crumb</span></div>
+      </div>
+      <div class="menu-price">€5.50</div>
+    </div>
+    <div class="menu-item">
+      <div class="menu-item-left">
+        <span class="menu-num">02</span>
+        <div class="menu-name">Irish Soda Bread<span>Buttermilk, wholemeal, Kildare sea salt</span></div>
+      </div>
+      <div class="menu-price">€4.20</div>
+    </div>
+    <div class="menu-item">
+      <div class="menu-item-left">
+        <span class="menu-num">03</span>
+        <div class="menu-name">Butter Croissant<span>French butter, 27 layers, baked at dawn</span></div>
+      </div>
+      <div class="menu-price">€2.80</div>
+    </div>
+    <div class="menu-item">
+      <div class="menu-item-left">
+        <span class="menu-num">04</span>
+        <div class="menu-name">Pain au Chocolat<span>Valrhona dark chocolate, same laminated dough</span></div>
+      </div>
+      <div class="menu-price">€3.20</div>
+    </div>
+    <div class="menu-item">
+      <div class="menu-item-left">
+        <span class="menu-num">05</span>
+        <div class="menu-name">Artisan Sandwich<span>Seasonal fillings, house-baked bread, made to order</span></div>
+      </div>
+      <div class="menu-price">From €7.50</div>
+    </div>
+    <div class="menu-item">
+      <div class="menu-item-left">
+        <span class="menu-num">06</span>
+        <div class="menu-name">Filter Coffee<span>Single-origin, Cork-roasted, batch brewed</span></div>
+      </div>
+      <div class="menu-price">€3.00</div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about" class="section">
+  <div class="about-grid">
+    <div class="about-left">
+      <div class="label">Our Story</div>
+      <h2>Twelve years<br/>of <em>slow</em> bread.</h2>
+      <div class="pillars">
+        <div>
+          <div class="pillar-num">001 — Provenance</div>
+          <div class="pillar-title">Milled in Kildare</div>
+          <div class="pillar-text">We work with Danaher's stone mill. Irish grain, cold-pressed, full of character. You taste the difference in the first bite.</div>
+          <div class="pillar-divider"></div>
+        </div>
+        <div>
+          <div class="pillar-num">002 — Community</div>
+          <div class="pillar-title">Bread for Dublin Simon</div>
+          <div class="pillar-text">Every evening, day-old loaves go to Dublin Simon Community. Good food, shared fairly.</div>
+          <div class="pillar-divider"></div>
+        </div>
+        <div>
+          <div class="pillar-num">003 — Waste</div>
+          <div class="pillar-title">Near-zero kitchen</div>
+          <div class="pillar-text">Compostable packaging, no single-use plastics, and spent grain goes to a local smallholding.</div>
+        </div>
+      </div>
+    </div>
+    <div class="about-right">
+      <blockquote class="about-quote">"Good bread needs patience — a virtue Dublin has always known."</blockquote>
+      <p class="about-quote-attr">— Siobhán Ó'Brien, Head Baker &amp; Founder</p>
+    </div>
+  </div>
+</section>
+
+<!-- VISIT -->
+<section id="visit" class="section visit-section">
+  <div class="visit-grid">
+    <div>
+      <div class="label">Opening Hours</div>
+      <h2 class="visit-heading">Come find<br/><em>us.</em></h2>
+      <div class="hours-list">
+        <div class="hour-row"><span class="hour-day">Monday – Thursday</span><span class="hour-time">7:00 – 17:00</span></div>
+        <div class="hour-row"><span class="hour-day">Friday</span><span class="hour-time">7:00 – 18:00</span></div>
+        <div class="hour-row"><span class="hour-day">Saturday</span><span class="hour-time">8:00 – 16:00</span></div>
+        <div class="hour-row"><span class="hour-day">Sunday</span><span class="hour-time closed">Closed</span></div>
+      </div>
+    </div>
+    <div class="visit-right">
+      <div class="address-block">
+        <div class="address-label">Address</div>
+        <div class="address-street">14 Drury Street</div>
+        <div class="address-city">Dublin 2, D02 VX31 — Near St. Stephen's Green</div>
+      </div>
+      <div class="map-box">
+        <svg width="28" height="34" viewBox="0 0 28 34" fill="none" style="position:relative;z-index:1">
+          <path d="M14 0C6.3 0 0 6.3 0 14C0 24.5 14 34 14 34C14 34 28 24.5 28 14C28 6.3 21.7 0 14 0Z" fill="#E8B400"/>
+          <circle cx="14" cy="14" r="5" fill="#1A1916"/>
+        </svg>
+        <p class="map-note">Drury Street, between<br/>Grafton Street &amp; George's Street</p>
+      </div>
+      <a href="https://maps.google.com/?q=Drury+Street+Dublin+2" target="_blank" class="dir-link">
+        Get Directions
+        <svg width="16" height="10" viewBox="0 0 16 10" fill="none"><path d="M1 5H15M15 5L11 1M15 5L11 9" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <a href="#" class="footer-logo">Crumb &amp; Co.</a>
+  <ul class="footer-links">
+    <li><a href="#">Instagram</a></li>
+    <li><a href="#">Facebook</a></li>
+    <li><a href="#">Privacy</a></li>
+  </ul>
+  <p class="footer-copy">© 2025 Crumb &amp; Co. Dublin</p>
+  <p class="footer-copy">Developed &amp; designed by TrendPotion LLC</p>
+</footer>
+
+<script>
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.style.opacity = '1';
+        e.target.style.transform = 'translateY(0)';
+      }
+    });
+  }, { threshold: 0.12 });
+
+  document.querySelectorAll('.menu-item, .pillar-num, .pillar-title, .pillar-text, .hour-row, .about-quote').forEach((el, i) => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(20px)';
+    el.style.transition = `opacity 0.7s ${i * 0.06}s ease, transform 0.7s ${i * 0.06}s ease`;
+    observer.observe(el);
+  });
+</script>
+</body>
+</html>
