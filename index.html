@@ -1,0 +1,1490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TrendPotion — Brew Your Brand's Growth</title>
+<link rel="icon" type="image/x-icon" href="/images/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --p1: #7c3aed;
+    --p2: #a855f7;
+    --p3: #c084fc;
+    --p4: #e9d5ff;
+    --acc: #f0abfc;
+    --acc2: #38bdf8;
+    --acc3: #34d399;
+    --dark: #09080f;
+    --dark2: #110d1e;
+    --dark3: #1a1430;
+    --mid: #2d2250;
+    --txt: #e2d9f3;
+    --txt2: #a89ec4;
+    --white: #faf8ff;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--dark);
+    color: var(--txt);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+
+
+  /* NOISE OVERLAY */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9000;
+    opacity: 0.35;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 5%;
+    background: rgba(9,8,15,0.7);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(124,58,237,0.12);
+    transition: padding 0.3s ease;
+  }
+  nav.scrolled { padding: 14px 5%; }
+
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+  }
+  .logo-icon {
+    width: 38px; height: 38px;
+    position: relative;
+  }
+  .logo-text {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 1.25rem;
+    color: var(--white);
+    letter-spacing: -0.02em;
+  }
+  .logo-text span { color: var(--p2); }
+
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 36px;
+    list-style: none;
+  }
+  .nav-links a {
+    color: var(--txt2);
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    transition: color 0.2s;
+    position: relative;
+  }
+  .nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: -3px; left: 0;
+    width: 0; height: 1.5px;
+    background: var(--p2);
+    transition: width 0.3s ease;
+  }
+  .nav-links a:hover { color: var(--white); }
+  .nav-links a:hover::after { width: 100%; }
+
+  .nav-cta {
+    padding: 9px 22px;
+    background: var(--p1);
+    color: var(--white) !important;
+    border-radius: 100px;
+    font-size: 0.875rem !important;
+    font-weight: 600 !important;
+    transition: background 0.2s, transform 0.15s !important;
+  }
+  .nav-cta::after { display: none !important; }
+  .nav-cta:hover { background: var(--p2) !important; transform: translateY(-1px); }
+
+  .hamburger {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    width: 40px; height: 40px;
+    background: rgba(124,58,237,0.15);
+    border: 1px solid rgba(124,58,237,0.25);
+    border-radius: 10px;
+    color: var(--white);
+    font-size: 1.25rem;
+    line-height: 1;
+    transition: background 0.2s, border-color 0.2s;
+  }
+  .hamburger:hover { background: rgba(124,58,237,0.3); border-color: rgba(124,58,237,0.5); }
+
+  /* HERO */
+  #home {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    padding: 120px 5% 80px;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+  }
+  .orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    opacity: 0.35;
+    animation: orbFloat 8s ease-in-out infinite;
+  }
+  .orb-1 { width: 600px; height: 600px; background: radial-gradient(circle, #7c3aed, transparent 70%); top: -10%; left: -5%; animation-delay: 0s; }
+  .orb-2 { width: 400px; height: 400px; background: radial-gradient(circle, #a855f7, transparent 70%); top: 20%; right: -5%; animation-delay: -3s; }
+  .orb-3 { width: 300px; height: 300px; background: radial-gradient(circle, #38bdf8, transparent 70%); bottom: 10%; left: 30%; animation-delay: -5s; opacity: 0.2; }
+
+  @keyframes orbFloat {
+    0%, 100% { transform: translateY(0) scale(1); }
+    50% { transform: translateY(-30px) scale(1.05); }
+  }
+
+  .grid-overlay {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(124,58,237,0.06) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(124,58,237,0.06) 1px, transparent 1px);
+    background-size: 60px 60px;
+    mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black, transparent);
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 900px;
+    text-align: center;
+  }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 16px 6px 6px;
+    background: rgba(124,58,237,0.15);
+    border: 1px solid rgba(124,58,237,0.3);
+    border-radius: 100px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--p3);
+    margin-bottom: 28px;
+    animation: fadeUp 0.8s ease both;
+  }
+  .hero-badge-dot {
+    width: 22px; height: 22px;
+    background: var(--p1);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+  }
+
+  h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(3rem, 7vw, 6.5rem);
+    font-weight: 800;
+    line-height: 1.0;
+    letter-spacing: -0.03em;
+    color: var(--white);
+    margin-bottom: 24px;
+    animation: fadeUp 0.8s 0.1s ease both;
+  }
+  h1 .gradient-text {
+    background: linear-gradient(135deg, var(--p2) 0%, var(--acc) 50%, var(--acc2) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .hero-sub {
+    font-size: clamp(1rem, 2vw, 1.2rem);
+    color: var(--txt2);
+    max-width: 600px;
+    margin: 0 auto 40px;
+    line-height: 1.7;
+    font-weight: 300;
+    animation: fadeUp 0.8s 0.2s ease both;
+  }
+
+  .hero-btns {
+    display: flex;
+    gap: 14px;
+    justify-content: center;
+    flex-wrap: wrap;
+    animation: fadeUp 0.8s 0.3s ease both;
+  }
+
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 14px 30px;
+    background: linear-gradient(135deg, var(--p1), var(--p2));
+    color: var(--white);
+    border-radius: 100px;
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 0.95rem;
+    text-decoration: none;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 0 30px rgba(124,58,237,0.4);
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 0 50px rgba(124,58,237,0.6); }
+
+  .btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 14px 30px;
+    background: transparent;
+    color: var(--txt);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 100px;
+    font-family: 'Syne', sans-serif;
+    font-weight: 600;
+    font-size: 0.95rem;
+    text-decoration: none;
+    transition: border-color 0.2s, color 0.2s, transform 0.2s;
+  }
+  .btn-secondary:hover { border-color: var(--p2); color: var(--white); transform: translateY(-2px); }
+
+  .hero-stats {
+    display: flex;
+    justify-content: center;
+    gap: clamp(24px, 5vw, 64px);
+    margin-top: 72px;
+    animation: fadeUp 0.8s 0.4s ease both;
+  }
+  .stat { text-align: center; }
+  .stat-num {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(1.6rem, 3vw, 2.4rem);
+    font-weight: 800;
+    color: var(--white);
+    background: linear-gradient(135deg, var(--white), var(--p3));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .stat-label { font-size: 0.8rem; color: var(--txt2); margin-top: 2px; }
+
+  /* FLOATING POTIONS */
+  .floating-el {
+    position: absolute;
+    pointer-events: none;
+    animation: floatEl 6s ease-in-out infinite;
+  }
+  .floating-el:nth-child(1) { top: 15%; right: 8%; animation-delay: 0s; }
+  .floating-el:nth-child(2) { bottom: 20%; left: 5%; animation-delay: -2s; }
+  .floating-el:nth-child(3) { top: 60%; right: 3%; animation-delay: -4s; }
+  @keyframes floatEl { 0%,100% { transform: translateY(0) rotate(0deg); } 50% { transform: translateY(-20px) rotate(5deg); } }
+
+  /* SCROLL INDICATOR */
+  .scroll-hint {
+    position: absolute;
+    bottom: 32px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    color: var(--txt2);
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    animation: fadeIn 1s 1s both;
+  }
+  .scroll-line {
+    width: 1px; height: 40px;
+    background: linear-gradient(to bottom, var(--p2), transparent);
+    animation: scrollPulse 2s ease-in-out infinite;
+  }
+  @keyframes scrollPulse { 0%,100% { opacity: 0.4; } 50% { opacity: 1; } }
+
+  /* SECTIONS */
+  section { padding: 100px 5%; }
+  .section-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--p3);
+    margin-bottom: 16px;
+  }
+  .section-label::before {
+    content: '';
+    display: block;
+    width: 20px; height: 1.5px;
+    background: var(--p2);
+  }
+  h2 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(2rem, 4vw, 3.2rem);
+    font-weight: 800;
+    color: var(--white);
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+  }
+  .section-desc {
+    color: var(--txt2);
+    font-size: 1.05rem;
+    max-width: 500px;
+    margin-top: 14px;
+    line-height: 1.7;
+    font-weight: 300;
+  }
+
+  /* SERVICES */
+  #services { background: var(--dark2); }
+  .services-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 24px;
+    margin-bottom: 64px;
+    flex-wrap: wrap;
+  }
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+  }
+  .service-card {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(124,58,237,0.15);
+    border-radius: 20px;
+    padding: 36px 32px;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
+  }
+  .service-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--p2), transparent);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .service-card:hover { transform: translateY(-6px); border-color: rgba(124,58,237,0.4); box-shadow: 0 20px 60px rgba(124,58,237,0.15); }
+  .service-card:hover::before { opacity: 1; }
+
+  .service-card.featured {
+    background: linear-gradient(135deg, rgba(124,58,237,0.2), rgba(168,85,247,0.1));
+    border-color: rgba(124,58,237,0.4);
+    grid-column: span 2;
+  }
+  @media (max-width: 800px) { .service-card.featured { grid-column: span 1; } }
+
+  .service-icon {
+    width: 52px; height: 52px;
+    background: rgba(124,58,237,0.2);
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    margin-bottom: 20px;
+    border: 1px solid rgba(124,58,237,0.25);
+  }
+  .service-card h3 {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--white);
+    margin-bottom: 10px;
+  }
+  .service-card p { color: var(--txt2); font-size: 0.9rem; line-height: 1.7; }
+  .service-tag {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 4px 14px;
+    background: rgba(124,58,237,0.15);
+    border: 1px solid rgba(124,58,237,0.25);
+    border-radius: 100px;
+    font-size: 0.75rem;
+    color: var(--p3);
+    font-weight: 500;
+  }
+
+  /* ABOUT */
+  #about {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+  }
+  .about-visual {
+    position: relative;
+    height: 480px;
+    padding-bottom: 24px;
+  }
+  .about-card-main {
+    position: absolute;
+    inset: 0;
+    border-radius: 24px;
+    background: linear-gradient(135deg, rgba(124,58,237,0.18), rgba(168,85,247,0.08));
+    border: 1px solid rgba(124,58,237,0.22);
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .about-card-main::before {
+    content: '';
+    position: absolute;
+    top: -30%; left: -20%;
+    width: 300px; height: 300px;
+    background: radial-gradient(circle, rgba(124,58,237,0.45), transparent 70%);
+    filter: blur(40px);
+    pointer-events: none;
+  }
+  .about-visual-big-text {
+    font-family: 'Syne', sans-serif;
+    font-size: 7rem;
+    font-weight: 800;
+    color: rgba(255,255,255,0.04);
+    line-height: 1;
+    position: absolute;
+    top: 20px; right: 20px;
+    pointer-events: none;
+    user-select: none;
+  }
+  .about-potion-center {
+    position: relative;
+    z-index: 1;
+    animation: floatEl 5s ease-in-out infinite;
+  }
+  .about-badge {
+    position: absolute;
+    bottom: 12px; right: 12px;
+    background: var(--dark3);
+    border: 1px solid rgba(124,58,237,0.35);
+    border-radius: 16px;
+    padding: 14px 18px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    box-shadow: 0 16px 40px rgba(0,0,0,0.5);
+    z-index: 3;
+  }
+  .about-badge-icon { font-size: 26px; }
+  .about-badge-text .num {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 1.3rem;
+    color: var(--white);
+    line-height: 1;
+  }
+  .about-badge-text .label { font-size: 0.72rem; color: var(--txt2); margin-top: 2px; }
+
+  .about-content { position: relative; z-index: 1; }
+  .about-content p { color: var(--txt2); line-height: 1.8; margin-top: 16px; font-weight: 300; }
+  .about-pills { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 28px; }
+  .pill {
+    padding: 8px 18px;
+    border-radius: 100px;
+    font-size: 0.82rem;
+    font-weight: 500;
+    border: 1px solid;
+  }
+  .pill-p { color: var(--p3); border-color: rgba(168,85,247,0.3); background: rgba(168,85,247,0.08); }
+  .pill-b { color: var(--acc2); border-color: rgba(56,189,248,0.3); background: rgba(56,189,248,0.08); }
+  .pill-g { color: var(--acc3); border-color: rgba(52,211,153,0.3); background: rgba(52,211,153,0.08); }
+
+  /* PORTFOLIO */
+  #portfolio { background: var(--dark2); }
+  .portfolio-header { margin-bottom: 56px; }
+  .portfolio-grid {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    grid-template-rows: auto;
+    gap: 20px;
+  }
+  .case-card {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(124,58,237,0.12);
+    border-radius: 20px;
+    padding: 36px;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.3s, border-color 0.3s;
+  }
+  .case-card:hover { transform: translateY(-4px); border-color: rgba(124,58,237,0.35); }
+  .case-card-1 { grid-column: span 7; }
+  .case-card-2 { grid-column: span 5; }
+  .case-card-3 { grid-column: span 4; }
+  .case-card-4 { grid-column: span 8; }
+  @media (max-width: 900px) {
+    .case-card-1,.case-card-2,.case-card-3,.case-card-4 { grid-column: span 12; }
+  }
+
+  .case-logo { margin-bottom: 20px; display: flex; align-items: center; height: 44px; }
+  .case-logo-text {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 1.1rem;
+    letter-spacing: -0.02em;
+    color: var(--white);
+    line-height: 1;
+  }
+  .case-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 12px;
+    background: rgba(124,58,237,0.12);
+    border-radius: 100px;
+    font-size: 0.72rem;
+    color: var(--p3);
+    font-weight: 500;
+    margin-bottom: 14px;
+  }
+  .case-card h3 {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: var(--white);
+    margin-bottom: 10px;
+  }
+  .case-card p { color: var(--txt2); font-size: 0.88rem; line-height: 1.7; }
+  .case-metrics {
+    display: flex;
+    gap: 24px;
+    margin-top: 24px;
+    flex-wrap: wrap;
+  }
+  .case-metric .val {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.6rem;
+    font-weight: 800;
+    color: var(--white);
+    background: linear-gradient(135deg, var(--white), var(--p3));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .case-metric .key { font-size: 0.75rem; color: var(--txt2); margin-top: 2px; }
+
+  .case-bg-accent {
+    position: absolute;
+    bottom: -40px; right: -40px;
+    width: 160px; height: 160px;
+    border-radius: 50%;
+    filter: blur(50px);
+    opacity: 0.2;
+    pointer-events: none;
+  }
+
+  /* CONTACT */
+  #contact {
+    position: relative;
+    overflow: hidden;
+  }
+  .contact-inner {
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+    position: relative;
+    z-index: 1;
+  }
+  .contact-inner h2 { font-size: clamp(2.2rem, 4.5vw, 3.8rem); }
+  .contact-inner .section-desc { margin: 16px auto 48px; }
+
+  .contact-form {
+    display: grid;
+    gap: 16px;
+    text-align: left;
+  }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  @media (max-width: 600px) { .form-row { grid-template-columns: 1fr; } }
+
+  .form-group { display: flex; flex-direction: column; gap: 8px; }
+  .form-group label { font-size: 0.8rem; font-weight: 500; color: var(--txt2); letter-spacing: 0.05em; }
+  .form-group input, .form-group textarea, .form-group select {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(124,58,237,0.2);
+    border-radius: 12px;
+    padding: 14px 18px;
+    color: var(--white);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.95rem;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    width: 100%;
+  }
+  .form-group input::placeholder, .form-group textarea::placeholder { color: rgba(255,255,255,0.2); }
+  .form-group input:focus, .form-group textarea:focus, .form-group select:focus {
+    border-color: var(--p2);
+    box-shadow: 0 0 0 3px rgba(124,58,237,0.15);
+  }
+  .form-group textarea { resize: vertical; min-height: 120px; }
+  .form-group select { appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23a89ec4' d='M6 8L1 3h10z'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 16px center; }
+  .form-group select option { background: var(--dark2); }
+
+  .submit-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    padding: 16px;
+    background: linear-gradient(135deg, var(--p1), var(--p2));
+    color: var(--white);
+    border: none;
+    border-radius: 12px;
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 1rem;
+    transition: transform 0.2s, box-shadow 0.2s, opacity 0.2s;
+    box-shadow: 0 0 30px rgba(124,58,237,0.3);
+    margin-top: 8px;
+  }
+  .submit-btn:hover { transform: translateY(-2px); box-shadow: 0 0 50px rgba(124,58,237,0.5); }
+  .submit-btn:active { transform: translateY(0); opacity: 0.9; }
+
+  .contact-bg-orb {
+    position: absolute;
+    width: 500px; height: 500px;
+    background: radial-gradient(circle, rgba(124,58,237,0.2), transparent 70%);
+    border-radius: 50%;
+    bottom: -100px; left: 50%;
+    transform: translateX(-50%);
+    filter: blur(60px);
+    pointer-events: none;
+  }
+
+  /* FOOTER */
+  footer {
+    background: var(--dark2);
+    border-top: 1px solid rgba(124,58,237,0.1);
+    padding: 56px 5% 32px;
+  }
+  .footer-inner {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 48px;
+    margin-bottom: 48px;
+  }
+  @media (max-width: 768px) { .footer-inner { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 480px) { .footer-inner { grid-template-columns: 1fr; } }
+
+  .footer-brand p { color: var(--txt2); font-size: 0.88rem; margin-top: 14px; line-height: 1.7; max-width: 260px; }
+  .footer-socials { display: flex; gap: 10px; margin-top: 20px; }
+  .social-btn {
+    width: 36px; height: 36px;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(124,58,237,0.2);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 15px;
+    text-decoration: none;
+    transition: background 0.2s, border-color 0.2s, transform 0.2s;
+  }
+  .social-btn:hover { background: rgba(124,58,237,0.2); border-color: var(--p2); transform: translateY(-2px); }
+
+  .footer-col h4 {
+    font-family: 'Syne', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--white);
+    margin-bottom: 16px;
+    letter-spacing: 0.05em;
+  }
+  .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+  .footer-col ul a {
+    color: var(--txt2);
+    text-decoration: none;
+    font-size: 0.875rem;
+    transition: color 0.2s;
+  }
+  .footer-col ul a:hover { color: var(--p3); }
+
+  .footer-bottom {
+    padding-top: 28px;
+    border-top: 1px solid rgba(255,255,255,0.06);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: gap;
+    gap: 16px;
+  }
+  .footer-bottom p { color: var(--txt2); font-size: 0.8rem; }
+
+  /* MOBILE NAV */
+  .mobile-menu {
+    position: fixed;
+    inset: 0;
+    background: rgba(9,8,15,0.97);
+    backdrop-filter: blur(20px);
+    z-index: 999;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 32px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s;
+  }
+  .mobile-menu.open { opacity: 1; pointer-events: all; }
+  .mobile-menu a {
+    font-family: 'Syne', sans-serif;
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--white);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .mobile-menu a:hover { color: var(--p2); }
+  .mobile-close {
+    position: absolute;
+    top: 24px; right: 5%;
+    font-size: 2rem;
+    color: var(--txt2);
+    background: none;
+    border: none;
+    transition: color 0.2s;
+  }
+  .mobile-close:hover { color: var(--white); }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+  .reveal-delay-1 { transition-delay: 0.1s; }
+  .reveal-delay-2 { transition-delay: 0.2s; }
+  .reveal-delay-3 { transition-delay: 0.3s; }
+  .reveal-delay-4 { transition-delay: 0.4s; }
+
+  /* TICKER */
+  .ticker-wrap {
+    overflow: hidden;
+    border-top: 1px solid rgba(124,58,237,0.15);
+    border-bottom: 1px solid rgba(124,58,237,0.15);
+    padding: 14px 0;
+    background: rgba(124,58,237,0.05);
+  }
+  .ticker {
+    display: flex;
+    gap: 0;
+    width: max-content;
+    animation: ticker 25s linear infinite;
+  }
+  .ticker-item {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 0 40px;
+    font-size: 0.82rem;
+    font-weight: 500;
+    color: var(--txt2);
+    white-space: nowrap;
+  }
+  .ticker-item span { color: var(--p3); }
+  .ticker-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--p2); flex-shrink: 0; }
+  @keyframes ticker { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+
+  /* POTION SVG ELEMENTS */
+  .potion-svg { filter: drop-shadow(0 0 20px rgba(168,85,247,0.5)); }
+
+  /* Responsive */
+  @media (max-width: 900px) {
+    #about { grid-template-columns: 1fr; }
+    .about-visual { height: 320px; }
+  }
+  @media (max-width: 768px) {
+    .nav-links { display: none; }
+    .hamburger { display: flex; }
+    section { padding: 72px 5%; }
+    .services-header { flex-direction: column; }
+  }
+
+  /* MARQUEE LOGOS */
+  .marquee-section { padding: 48px 0; overflow: hidden; }
+  .marquee-label { text-align: center; font-size: 0.75rem; font-weight: 500; letter-spacing: 0.15em; color: var(--txt2); text-transform: uppercase; margin-bottom: 32px; }
+  .marquee-track { display: flex; gap: 0; width: max-content; animation: ticker 20s linear infinite; }
+  .marquee-item {
+    padding: 10px 32px;
+    margin: 0 8px;
+    border: 1px solid rgba(124,58,237,0.15);
+    border-radius: 100px;
+    background: rgba(255,255,255,0.02);
+    font-family: 'Syne', sans-serif;
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: var(--txt2);
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  /* PROCESS */
+  .process-steps {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 2px;
+    margin-top: 64px;
+    background: rgba(124,58,237,0.1);
+    border-radius: 20px;
+    overflow: hidden;
+    border: 1px solid rgba(124,58,237,0.15);
+  }
+  .process-step {
+    background: var(--dark);
+    padding: 36px 28px;
+    position: relative;
+    transition: background 0.3s;
+  }
+  .process-step:hover { background: rgba(124,58,237,0.08); }
+  .step-num {
+    font-family: 'Syne', sans-serif;
+    font-size: 3rem;
+    font-weight: 800;
+    color: rgba(124,58,237,0.15);
+    line-height: 1;
+    margin-bottom: 16px;
+  }
+  .process-step h4 {
+    font-family: 'Syne', sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--white);
+    margin-bottom: 8px;
+  }
+  .process-step p { font-size: 0.85rem; color: var(--txt2); line-height: 1.6; }
+
+  /* NOTIFICATION POPUP */
+  .popup-notify {
+    position: fixed;
+    bottom: 28px; left: 28px;
+    background: var(--dark3);
+    border: 1px solid rgba(124,58,237,0.3);
+    border-radius: 16px;
+    padding: 16px 20px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    z-index: 5000;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+    max-width: 280px;
+    animation: popIn 0.5s 2s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+    opacity: 0;
+  }
+  .popup-notify-icon { font-size: 28px; flex-shrink: 0; }
+  .popup-notify-text .title { font-family: 'Syne', sans-serif; font-size: 0.85rem; font-weight: 700; color: var(--white); }
+  .popup-notify-text .sub { font-size: 0.75rem; color: var(--txt2); margin-top: 2px; }
+  @keyframes popIn {
+    from { opacity: 0; transform: translateY(20px) scale(0.9); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+  }
+  .popup-close {
+    position: absolute;
+    top: 8px; right: 10px;
+    background: none; border: none;
+    line-height: 1;
+  }
+</style>
+</head>
+<body>
+
+<!-- NOTIFICATION POPUP -->
+<div class="popup-notify" id="popup">
+  <button class="popup-close" onclick="document.getElementById('popup').remove()">✕</button>
+  <span class="popup-notify-icon">🧪</span>
+  <div class="popup-notify-text">
+    <div class="title">New campaign live!</div>
+    <div class="sub">A brand just hit 2M impressions ✨</div>
+  </div>
+</div>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <button class="mobile-close" id="menuClose">✕</button>
+  <a href="#home" onclick="closeMenu()">Home</a>
+  <a href="#services" onclick="closeMenu()">Services</a>
+  <a href="#about" onclick="closeMenu()">About</a>
+  <a href="#portfolio" onclick="closeMenu()">Portfolio</a>
+  <a href="#contact" onclick="closeMenu()">Contact</a>
+</div>
+
+<!-- NAV -->
+<nav id="navbar">
+  <a href="#home" class="logo">
+    <svg class="logo-icon" viewBox="0 0 38 38" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect x="14" y="2" width="10" height="5" rx="2" fill="#7c3aed"/>
+      <path d="M12 7h14v4l5 10c2 4 1 9-2 12a10 10 0 01-18 0c-3-3-4-8-2-12l5-10V7z" fill="#1a1430" stroke="#7c3aed" stroke-width="1.5"/>
+      <path d="M12 7h14v4l5 10c2 4 1 9-2 12a10 10 0 01-18 0c-3-3-4-8-2-12l5-10V7z" fill="url(#potionGrad)" opacity="0.6"/>
+      <ellipse cx="16" cy="25" rx="3" ry="2" fill="rgba(240,171,252,0.5)"/>
+      <circle cx="22" cy="28" r="1.5" fill="rgba(240,171,252,0.4)"/>
+      <defs>
+        <linearGradient id="potionGrad" x1="19" y1="7" x2="19" y2="35" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stop-color="#a855f7" stop-opacity="0.8"/>
+          <stop offset="100%" stop-color="#7c3aed" stop-opacity="0.3"/>
+        </linearGradient>
+      </defs>
+    </svg>
+    <span class="logo-text">Trend<span>Potion</span></span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#home">Home</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#portfolio">Portfolio</a></li>
+    <li><a href="#contact" class="nav-cta">Get Started →</a></li>
+  </ul>
+  <button class="hamburger" id="hamburger" aria-label="Menu">
+    <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect x="2" y="3" width="14" height="1.8" rx="0.9" fill="currentColor"/>
+      <rect x="2" y="8.1" width="10" height="1.8" rx="0.9" fill="currentColor"/>
+      <rect x="2" y="13.2" width="14" height="1.8" rx="0.9" fill="currentColor"/>
+    </svg>
+  </button>
+</nav>
+
+<!-- HERO -->
+<section id="home">
+  <div class="hero-bg">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+    <div class="grid-overlay"></div>
+  </div>
+
+  <!-- Floating potion elements -->
+  <svg class="floating-el" width="60" height="80" viewBox="0 0 60 80" fill="none" xmlns="http://www.w3.org/2000/svg" opacity="0.5">
+    <rect x="20" y="0" width="20" height="10" rx="4" fill="#7c3aed"/>
+    <path d="M15 10h30v10l12 25c4 8 2 18-4 24a22 22 0 01-36 0c-6-6-8-16-4-24l12-25V10z" fill="#1a1430" stroke="#a855f7" stroke-width="2"/>
+    <path d="M15 10h30v10l12 25c4 8 2 18-4 24a22 22 0 01-36 0c-6-6-8-16-4-24l12-25V10z" fill="url(#fp1)" opacity="0.7"/>
+    <ellipse cx="24" cy="52" rx="5" ry="3.5" fill="rgba(240,171,252,0.5)"/>
+    <circle cx="34" cy="60" r="3" fill="rgba(240,171,252,0.35)"/>
+    <defs><linearGradient id="fp1" x1="30" y1="10" x2="30" y2="75" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#c084fc" stop-opacity="0.8"/><stop offset="100%" stop-color="#7c3aed" stop-opacity="0.3"/></linearGradient></defs>
+  </svg>
+
+  <svg class="floating-el" width="40" height="55" viewBox="0 0 40 55" fill="none" xmlns="http://www.w3.org/2000/svg" opacity="0.4">
+    <rect x="13" y="0" width="14" height="7" rx="3" fill="#38bdf8"/>
+    <path d="M10 7h20v7l8 17c3 6 1 12-3 16a15 15 0 01-24 0c-4-4-6-10-3-16l8-17V7z" fill="#1a1430" stroke="#38bdf8" stroke-width="1.5"/>
+    <path d="M10 7h20v7l8 17c3 6 1 12-3 16a15 15 0 01-24 0c-4-4-6-10-3-16l8-17V7z" fill="#38bdf8" opacity="0.2"/>
+    <ellipse cx="16" cy="36" rx="3.5" ry="2.5" fill="rgba(56,189,248,0.5)"/>
+  </svg>
+
+  <svg class="floating-el" width="30" height="42" viewBox="0 0 30 42" fill="none" xmlns="http://www.w3.org/2000/svg" opacity="0.35">
+    <rect x="10" y="0" width="10" height="6" rx="2.5" fill="#34d399"/>
+    <path d="M7 6h16v5l6 13c2 4 1 9-2 12a11 11 0 01-18 0c-3-3-4-8-2-12l6-13V6z" fill="#1a1430" stroke="#34d399" stroke-width="1.5"/>
+    <path d="M7 6h16v5l6 13c2 4 1 9-2 12a11 11 0 01-18 0c-3-3-4-8-2-12l6-13V6z" fill="#34d399" opacity="0.2"/>
+    <ellipse cx="12" cy="27" rx="2.5" ry="2" fill="rgba(52,211,153,0.5)"/>
+  </svg>
+
+  <div class="hero-content">
+    <div class="hero-badge">
+      <span class="hero-badge-dot">🧪</span>
+      Digital Marketing Alchemy for Cool Brands
+    </div>
+    <h1>Brew the<br><span class="gradient-text">Perfect Trend</span></h1>
+    <p class="hero-sub">TrendPotion is a modern digital marketing agency turning brands and influencers into cultural phenomena through strategy, creativity, and social media mastery.</p>
+    <div class="hero-btns">
+      <a href="#contact" class="btn-primary">✨ Start Your Campaign</a>
+      <a href="#portfolio" class="btn-secondary">View Our Work →</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat">
+        <div class="stat-num">150+</div>
+        <div class="stat-label">Campaigns Launched</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">40M+</div>
+        <div class="stat-label">Impressions Generated</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">98%</div>
+        <div class="stat-label">Client Retention</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="scroll-hint">
+    <span>Scroll</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- TICKER -->
+<div class="ticker-wrap">
+  <div class="ticker">
+    <div class="ticker-item"><span class="ticker-dot"></span> Influencer Management <span>✦</span></div>
+    <div class="ticker-item"><span class="ticker-dot"></span> Social Media Growth <span>✦</span></div>
+    <div class="ticker-item"><span class="ticker-dot"></span> Paid Advertising <span>✦</span></div>
+    <div class="ticker-item"><span class="ticker-dot"></span> Content Creation <span>✦</span></div>
+    <div class="ticker-item"><span class="ticker-dot"></span> Campaign Strategy <span>✦</span></div>
+    <div class="ticker-item"><span class="ticker-dot"></span> Brand Growth <span>✦</span></div>
+    <div class="ticker-item"><span class="ticker-dot"></span> Creator Economy <span>✦</span></div>
+    <div class="ticker-item"><span class="ticker-dot"></span> Viral Marketing <span>✦</span></div>
+    <!-- duplicate -->
+    <div class="ticker-item"><span class="ticker-dot"></span> Influencer Management <span>✦</span></div>
+    <div class="ticker-item"><span class="ticker-dot"></span> Social Media Growth <span>✦</span></div>
+    <div class="ticker-item"><span class="ticker-dot"></span> Paid Advertising <span>✦</span></div>
+    <div class="ticker-item"><span class="ticker-dot"></span> Content Creation <span>✦</span></div>
+    <div class="ticker-item"><span class="ticker-dot"></span> Campaign Strategy <span>✦</span></div>
+    <div class="ticker-item"><span class="ticker-dot"></span> Brand Growth <span>✦</span></div>
+    <div class="ticker-item"><span class="ticker-dot"></span> Creator Economy <span>✦</span></div>
+    <div class="ticker-item"><span class="ticker-dot"></span> Viral Marketing <span>✦</span></div>
+  </div>
+</div>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="services-header reveal">
+    <div>
+      <div class="section-label">What We Do</div>
+      <h2>Our Magic<br>Services</h2>
+    </div>
+    <p class="section-desc">Every service is crafted like a potion — precise ingredients, powerful results, and a little bit of magic.</p>
+  </div>
+  <div class="services-grid">
+    <div class="service-card featured reveal">
+      <div class="service-icon">🤝</div>
+      <h3>Influencer Management</h3>
+      <p>We handle everything from talent scouting and outreach to contract negotiation, campaign coordination, and long-term partnership management. Whether you're a brand looking for the right voice or an influencer ready to scale — we're your full-service growth partner in the creator economy.</p>
+      <span class="service-tag">⭐ Most Popular</span>
+    </div>
+    <div class="service-card reveal reveal-delay-1">
+      <div class="service-icon">📱</div>
+      <h3>Social Media Marketing</h3>
+      <p>Full-funnel social strategy, content calendars, growth hacking, and hands-on account management across TikTok, Instagram, YouTube, X, and LinkedIn. We don't just post — we build audiences that actually care.</p>
+      <span class="service-tag">Organic Growth</span>
+    </div>
+    <div class="service-card reveal reveal-delay-2">
+      <div class="service-icon">🎯</div>
+      <h3>Paid Advertising</h3>
+      <p>Data-driven ad campaigns on Meta, TikTok, Google, YouTube, and Pinterest. From creative strategy and copy to targeting, optimization, and ROAS reporting — every dollar is optimized.</p>
+      <span class="service-tag">Performance</span>
+    </div>
+    <div class="service-card reveal reveal-delay-3">
+      <div class="service-icon">🎬</div>
+      <h3>Content Creation</h3>
+      <p>Short-form video, reels, UGC-style content, brand visuals, and social assets built for virality. We produce content that doesn't just look good — it converts and gets shared.</p>
+      <span class="service-tag">Creative</span>
+    </div>
+    <div class="service-card reveal reveal-delay-4">
+      <div class="service-icon">🧠</div>
+      <h3>Campaign Strategy</h3>
+      <p>Big-picture thinking meets granular execution. We architect multi-channel campaigns from positioning and messaging to rollout timelines and KPI frameworks that actually move the needle for brand growth.</p>
+      <span class="service-tag">Strategy</span>
+    </div>
+  </div>
+
+  <!-- HOW IT WORKS -->
+  <div style="margin-top: 80px;" class="reveal">
+    <div class="section-label">How It Works</div>
+    <h2>Our Process</h2>
+  </div>
+  <div class="process-steps reveal">
+    <div class="process-step">
+      <div class="step-num">01</div>
+      <h4>Discovery</h4>
+      <p>Deep-dive into your brand, audience, goals, and competitive landscape to find your edge.</p>
+    </div>
+    <div class="process-step">
+      <div class="step-num">02</div>
+      <h4>Strategy</h4>
+      <p>We craft a custom roadmap — channels, content pillars, budget allocation, and KPIs.</p>
+    </div>
+    <div class="process-step">
+      <div class="step-num">03</div>
+      <h4>Brew</h4>
+      <p>Our creative and media team brings the strategy to life with content, ads, and partnerships.</p>
+    </div>
+    <div class="process-step">
+      <div class="step-num">04</div>
+      <h4>Launch</h4>
+      <p>Go live across platforms with full coordination, scheduling, and real-time monitoring.</p>
+    </div>
+    <div class="process-step">
+      <div class="step-num">05</div>
+      <h4>Optimize</h4>
+      <p>Continuous A/B testing, analytics review, and iteration to compound your results.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-visual reveal">
+    <div class="about-card-main">
+      <div class="about-visual-big-text">TP</div>
+      <div class="about-potion-center">
+        <svg class="potion-svg" width="140" height="185" viewBox="0 0 140 185" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="48" y="0" width="44" height="20" rx="8" fill="#7c3aed"/>
+          <rect x="52" y="4" width="36" height="12" rx="6" fill="#a855f7" opacity="0.5"/>
+          <path d="M32 20h76v26l30 65c10 22 4 48-10 64a54 54 0 01-96 0C18 159 12 133 22 111l30-65V20z" fill="#0d0b1a" stroke="#7c3aed" stroke-width="2.5"/>
+          <path d="M32 20h76v26l30 65c10 22 4 48-10 64a54 54 0 01-96 0C18 159 12 133 22 111l30-65V20z" fill="url(#mainPotion)" opacity="0.65"/>
+          <circle cx="52" cy="130" r="12" fill="rgba(240,171,252,0.25)" stroke="rgba(240,171,252,0.4)" stroke-width="1"/>
+          <circle cx="82" cy="152" r="8" fill="rgba(240,171,252,0.2)" stroke="rgba(240,171,252,0.35)" stroke-width="1"/>
+          <circle cx="60" cy="160" r="5" fill="rgba(240,171,252,0.3)" stroke="rgba(240,171,252,0.4)" stroke-width="1"/>
+          <circle cx="95" cy="130" r="6" fill="rgba(168,85,247,0.3)"/>
+          <text x="108" y="90" font-size="16" fill="rgba(240,171,252,0.8)">✦</text>
+          <text x="18" y="110" font-size="12" fill="rgba(168,85,247,0.6)">✦</text>
+          <text x="112" y="150" font-size="10" fill="rgba(240,171,252,0.5)">✦</text>
+          <defs>
+            <linearGradient id="mainPotion" x1="70" y1="20" x2="70" y2="185" gradientUnits="userSpaceOnUse">
+              <stop offset="0%" stop-color="#c084fc" stop-opacity="0.9"/>
+              <stop offset="60%" stop-color="#7c3aed" stop-opacity="0.7"/>
+              <stop offset="100%" stop-color="#4c1d95" stop-opacity="0.5"/>
+            </linearGradient>
+          </defs>
+        </svg>
+      </div>
+      <div class="about-badge">
+        <span class="about-badge-icon">🧪</span>
+        <div class="about-badge-text">
+          <div class="num">3+ Yrs</div>
+          <div class="label">Brewing Trends</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="about-content reveal reveal-delay-2">
+    <div class="section-label">About Us</div>
+    <h2>We're the Alchemists Behind Viral Brands</h2>
+    <p>TrendPotion LLC was born from a simple belief: great brands aren't found, they're brewed. We combine data-driven strategy with bold creative thinking to turn everyday brands into cultural moments.</p>
+    <p style="margin-top: 12px;">From scrappy startups to established creators, our team of strategists, creators, and ad experts work as an extension of your team — obsessing over your growth like it's our own.</p>
+    <div class="about-pills">
+      <span class="pill pill-p">🧪 Trend Specialists</span>
+      <span class="pill pill-b">📊 Data-First</span>
+      <span class="pill pill-g">✨ Creator-Focused</span>
+      <span class="pill pill-p">🚀 Growth Obsessed</span>
+      <span class="pill pill-b">🌍 Global Reach</span>
+    </div>
+    <div style="margin-top: 36px;">
+      <a href="#contact" class="btn-primary">Work With Us →</a>
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE BRANDS -->
+<div class="marquee-section">
+  <p class="marquee-label">Trusted by forward-thinking brands & creators</p>
+  <div style="overflow:hidden">
+    <div class="marquee-track">
+      <div class="marquee-item">✈️ Ducommun Incorporated</div>
+      <div class="marquee-item">🏠 Meritage Homes</div>
+      <div class="marquee-item">⚙️ Applied Industrial Technologies</div>
+      <div class="marquee-item">🔬 Charles River Laboratories</div>
+      <div class="marquee-item">⛽ Range Resources</div>
+      <div class="marquee-item">🛡️ Globe Life</div>
+      <div class="marquee-item">🔍 Elastic NV</div>
+      <div class="marquee-item">👢 Boot Barn Holdings</div>
+      <div class="marquee-item">💊 BrightSpring Health Services</div>
+      <div class="marquee-item">✅ Clear Secure</div>
+      <div class="marquee-item">✈️ Ducommun Incorporated</div>
+      <div class="marquee-item">🏠 Meritage Homes</div>
+      <div class="marquee-item">⚙️ Applied Industrial Technologies</div>
+      <div class="marquee-item">🔬 Charles River Laboratories</div>
+      <div class="marquee-item">⛽ Range Resources</div>
+      <div class="marquee-item">🛡️ Globe Life</div>
+      <div class="marquee-item">🔍 Elastic NV</div>
+      <div class="marquee-item">👢 Boot Barn Holdings</div>
+      <div class="marquee-item">💊 BrightSpring Health Services</div>
+      <div class="marquee-item">✅ Clear Secure</div>
+    </div>
+  </div>
+</div>
+
+<!-- PORTFOLIO -->
+<section id="portfolio">
+  <div class="portfolio-header reveal">
+    <div class="section-label">Case Studies</div>
+    <h2>Potions That Worked</h2>
+    <p class="section-desc" style="max-width:600px">Real results from real campaigns. Every case study is a story of a brand that dared to brew something different.</p>
+  </div>
+
+  <div class="portfolio-grid">
+    <div class="case-card case-card-1 reveal">
+      <div class="case-bg-accent" style="background: radial-gradient(circle, #7c3aed, transparent 70%);"></div>
+      <div class="case-logo">
+        <span class="case-logo-text" style="color:#1B3A6B;">One <span style="color:#E4002B;">United</span> <span style="color:#1B3A6B;">Properties</span></span>
+      </div>
+      <div class="case-tag">📱 Social Media Marketing</div>
+      <h3>One United Properties</h3>
+      <p>Managed full social media presence for one of Romania's leading real estate developers, crafting premium content strategies that positioned the brand as a lifestyle leader across Instagram and LinkedIn.</p>
+      <div class="case-metrics">
+        <div class="case-metric"><div class="val">3x</div><div class="key">Engagement Growth</div></div>
+        <div class="case-metric"><div class="val">80K+</div><div class="key">New Followers</div></div>
+        <div class="case-metric"><div class="val">12mo</div><div class="key">Partnership</div></div>
+      </div>
+    </div>
+    <div class="case-card case-card-2 reveal reveal-delay-1">
+      <div class="case-bg-accent" style="background: radial-gradient(circle, #38bdf8, transparent 70%);"></div>
+      <div class="case-logo">
+        <span class="case-logo-text"><span style="color:#00D27F;">Current</span> <span style="color:#ffffff;">Bank</span></span>
+      </div>
+      <div class="case-tag">🧠 Campaign Strategy</div>
+      <h3>Current Bank</h3>
+      <p>Developed and executed digital campaign strategies for a modern fintech bank, driving app sign-ups and brand awareness through targeted social content and influencer partnerships.</p>
+      <div class="case-metrics">
+        <div class="case-metric"><div class="val">220%</div><div class="key">App Sign-up Lift</div></div>
+        <div class="case-metric"><div class="val">5M+</div><div class="key">Impressions</div></div>
+      </div>
+    </div>
+    <div class="case-card case-card-3 reveal reveal-delay-2">
+      <div class="case-bg-accent" style="background: radial-gradient(circle, #34d399, transparent 70%);"></div>
+      <div class="case-logo">
+        <span class="case-logo-text"><span style="color:#E8333A;">US</span> <span style="color:#ffffff;">Mobile</span></span>
+      </div>
+      <div class="case-tag">🎯 Paid Advertising</div>
+      <h3>US Mobile</h3>
+      <p>Ran multi-platform paid ad campaigns for a US telecom brand, optimizing creative assets and audience targeting to grow subscriber acquisition while reducing cost-per-lead.</p>
+      <div class="case-metrics">
+        <div class="case-metric"><div class="val">4.8x</div><div class="key">ROAS</div></div>
+        <div class="case-metric"><div class="val">-38%</div><div class="key">CPL Reduction</div></div>
+      </div>
+    </div>
+    <div class="case-card case-card-4 reveal reveal-delay-3">
+      <div class="case-bg-accent" style="background: radial-gradient(circle, #f0abfc, transparent 70%);"></div>
+      <div class="case-logo">
+        <span class="case-logo-text"><span style="color:#FF6200;">ING</span> <span style="color:#ffffff;">Bank</span></span>
+      </div>
+      <div class="case-tag">🤝 Influencer Management</div>
+      <h3>ING Bank</h3>
+      <p>Orchestrated a large-scale influencer campaign for ING Bank across TikTok and Instagram, pairing finance-focused creators with lifestyle voices to make banking feel fresh, relevant, and accessible to younger audiences.</p>
+      <div class="case-metrics">
+        <div class="case-metric"><div class="val">18M+</div><div class="key">Total Reach</div></div>
+        <div class="case-metric"><div class="val">45</div><div class="key">Creators Managed</div></div>
+        <div class="case-metric"><div class="val">9.2%</div><div class="key">Avg. Eng. Rate</div></div>
+        <div class="case-metric"><div class="val">6 weeks</div><div class="key">Campaign Length</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-bg-orb"></div>
+  <div class="contact-inner">
+    <div class="section-label reveal" style="justify-content:center">Let's Brew</div>
+    <h2 class="reveal">Ready to Mix<br>Your <span style="background:linear-gradient(135deg,#a855f7,#f0abfc);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">Magic Potion?</span></h2>
+    <p class="section-desc reveal" style="margin:16px auto 48px;">Tell us about your brand and goals. We'll get back to you within 24 hours with a custom strategy outline — no commitment required.</p>
+    <div class="contact-form reveal">
+      <div class="form-row">
+        <div class="form-group">
+          <label>Your Name</label>
+          <input type="text" id="f-name" placeholder="Alex Rivera" required>
+        </div>
+        <div class="form-group">
+          <label>Email Address</label>
+          <input type="email" id="f-email" placeholder="alex@yourbrand.com" required>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Company / Brand</label>
+          <input type="text" id="f-company" placeholder="Your Brand LLC">
+        </div>
+        <div class="form-group">
+          <label>Service Interested In</label>
+          <select id="f-service">
+            <option value="">Select a service...</option>
+            <option>Influencer Management</option>
+            <option>Social Media Marketing</option>
+            <option>Paid Advertising</option>
+            <option>Content Creation</option>
+            <option>Campaign Strategy</option>
+            <option>All of the above ✨</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Tell Us About Your Goals</label>
+        <textarea id="f-message" placeholder="What are you trying to achieve? Tell us about your brand, current challenges, and where you want to be..."></textarea>
+      </div>
+      <button class="submit-btn" id="submitBtn" onclick="handleSubmit(this)">🧪 Send My Brief</button>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <a href="#home" class="logo" style="margin-bottom:4px">
+        <svg width="32" height="32" viewBox="0 0 38 38" fill="none"><rect x="14" y="2" width="10" height="5" rx="2" fill="#7c3aed"/><path d="M12 7h14v4l5 10c2 4 1 9-2 12a10 10 0 01-18 0c-3-3-4-8-2-12l5-10V7z" fill="#1a1430" stroke="#7c3aed" stroke-width="1.5"/><path d="M12 7h14v4l5 10c2 4 1 9-2 12a10 10 0 01-18 0c-3-3-4-8-2-12l5-10V7z" fill="url(#fg2)" opacity="0.6"/><ellipse cx="16" cy="25" rx="3" ry="2" fill="rgba(240,171,252,0.5)"/><defs><linearGradient id="fg2" x1="19" y1="7" x2="19" y2="35" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#a855f7" stop-opacity="0.8"/><stop offset="100%" stop-color="#7c3aed" stop-opacity="0.3"/></linearGradient></defs></svg>
+        <span class="logo-text">Trend<span>Potion</span></span>
+      </a>
+      <p>Brewing digital magic for brands and creators ready to dominate their space. TrendPotion LLC — your growth, our obsession.</p>
+      </div>
+    <div class="footer-col">
+      <h4>Services</h4>
+      <ul>
+        <li><a href="#services">Influencer Management</a></li>
+        <li><a href="#services">Social Media Marketing</a></li>
+        <li><a href="#services">Paid Advertising</a></li>
+        <li><a href="#services">Content Creation</a></li>
+        <li><a href="#services">Campaign Strategy</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Company</h4>
+      <ul>
+        <li><a href="#about">About Us</a></li>
+        <li><a href="#portfolio">Case Studies</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Contact</h4>
+      <ul>
+        <li><a href="mailto:hello@trendpotion.com">hello@trendpotion.com</a></li>
+
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2026 TrendPotion LLC. All rights reserved.</p>
+    <p style="display:flex;gap:20px;flex-wrap:wrap;">
+      <a href="privacy-policy.html" style="color:var(--txt2);text-decoration:none;font-size:0.8rem;">Privacy Policy</a>
+      <a href="terms-of-use.html" style="color:var(--txt2);text-decoration:none;font-size:0.8rem;">Terms of Service</a>
+    </p>
+  </div>
+</footer>
+
+<script>
+  // NAVBAR SCROLL
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    navbar.classList.toggle('scrolled', window.scrollY > 60);
+  });
+
+  // MOBILE MENU
+  document.getElementById('hamburger').addEventListener('click', () => {
+    document.getElementById('mobileMenu').classList.add('open');
+  });
+  document.getElementById('menuClose').addEventListener('click', closeMenu);
+  function closeMenu() {
+    document.getElementById('mobileMenu').classList.remove('open');
+  }
+
+  // SCROLL REVEAL
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.1 });
+  reveals.forEach(el => observer.observe(el));
+
+  // FORM SUBMIT — Formspree
+  async function handleSubmit(btn) {
+    const name    = document.getElementById('f-name').value.trim();
+    const email   = document.getElementById('f-email').value.trim();
+    const company = document.getElementById('f-company').value.trim();
+    const service = document.getElementById('f-service').value;
+    const message = document.getElementById('f-message').value.trim();
+
+    if (!name || !email) {
+      btn.textContent = '⚠️ Please fill in your name and email.';
+      btn.style.background = 'linear-gradient(135deg, #b45309, #d97706)';
+      setTimeout(() => {
+        btn.textContent = '🧪 Send My Brief';
+        btn.style.background = '';
+      }, 3000);
+      return;
+    }
+
+    btn.textContent = '⏳ Sending...';
+    btn.disabled = true;
+    btn.style.opacity = '0.8';
+
+    try {
+      const res = await fetch('https://formspree.io/f/xgonedwz', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify({ name, email, company, service, message })
+      });
+
+      if (res.ok) {
+        btn.textContent = '✅ Brief Sent! We\'ll be in touch soon.';
+        btn.style.background = 'linear-gradient(135deg, #059669, #10b981)';
+        btn.style.opacity = '1';
+        document.getElementById('f-name').value = '';
+        document.getElementById('f-email').value = '';
+        document.getElementById('f-company').value = '';
+        document.getElementById('f-service').value = '';
+        document.getElementById('f-message').value = '';
+        setTimeout(() => {
+          btn.textContent = '🧪 Send My Brief';
+          btn.style.background = '';
+          btn.disabled = false;
+        }, 5000);
+      } else {
+        throw new Error('Server error');
+      }
+    } catch (err) {
+      btn.textContent = '❌ Something went wrong. Try again.';
+      btn.style.background = 'linear-gradient(135deg, #dc2626, #ef4444)';
+      btn.style.opacity = '1';
+      btn.disabled = false;
+      setTimeout(() => {
+        btn.textContent = '🧪 Send My Brief';
+        btn.style.background = '';
+      }, 4000);
+    }
+  }
+</script>
+</body>
+</html>
